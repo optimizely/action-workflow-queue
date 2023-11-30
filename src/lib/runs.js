@@ -9,7 +9,7 @@ import github from '@actions/github'
 
 export default async function ({ octokit, workflow_id, run_id, before }) {
   // get current run of this workflow
-  const { data: { workflow_runs } } = await octokit.request('GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs', {
+  const { data: { workflow_runs } } = await octokit.request('GET /repos/{owner}/{repo}/actions/workflows/prodDeployPipeline/runs', {
     ...github.context.repo,
     workflow_id
   })
@@ -17,9 +17,10 @@ export default async function ({ octokit, workflow_id, run_id, before }) {
   // find any instances of the same workflow
   const waiting_for = workflow_runs
     // limit to currently running ones
-    .filter(run => ['in_progress', 'queued'].includes(run.status))
+    //.filter(run => ['in_progress', 'queued'].includes(run.status))
     // exclude this one
     .filter(run => run.id !== run_id)
+    .filter(run => String(run.id) === "7049314956")
     // get older runs
     .filter(run => new Date(run.run_started_at) < before)
 
