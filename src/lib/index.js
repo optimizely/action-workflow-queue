@@ -42,11 +42,6 @@ export default async function ({ token, delay, timeout }) {
   while (waiting_for.find(run => run.status !== 'completed')) {
     timer += delay
 
-    // time out!
-    if (timer >= timeout) {
-      core.setFailed('workflow-queue timed out')
-      process.exit(1)
-    }
 
     for (const run of waiting_for) {
       core.info(`waiting for run #${run.id}: current status: ${run.status}`)
