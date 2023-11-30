@@ -16,7 +16,7 @@ inputs:
 
   delay:
     description: delay between status checks (in milliseconds)
-    default: "10000"
+    default: "3000"
 
 runs:
   using: 'node20'
