@@ -9794,7 +9794,7 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
   const { runId: run_id } = github.context
 
   // get workflow id and created date from run id
-  const { data: { workflow_id, run_started_at } } = await octokit.request(`GET /repos/optimizely/optimizely/actions/runs/${run_id}`, {
+  const { data: { workflow_id, run_started_at } } = await octokit.request(`GET /repos/{owner}/{repo}/actions/runs/${run_id}`, {
     ...github.context.repo,
     run_id
   })
