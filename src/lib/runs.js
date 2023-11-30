@@ -9,7 +9,7 @@ import github from '@actions/github'
 
 export default async function ({ octokit, workflow_id, run_id, before }) {
   // get current run of this workflow
-  const { data: { workflow_runs } } = await octokit.request('GET /repos/{owner}/{repo}/actions/workflows/prodDeployPipeline/runs', {
+  const { data: { workflow_runs } } = await octokit.request('GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs', {
     ...github.context.repo,
     workflow_id
   })
