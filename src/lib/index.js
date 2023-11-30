@@ -14,6 +14,7 @@ export default async function ({ token, delay, timeout }) {
   let timer = 0
 
   // init octokit
+  core.info(`${token}`);
   const octokit = github.getOctokit(token)
 
   // extract runId

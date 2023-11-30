@@ -9788,6 +9788,7 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
   let timer = 0
 
   // init octokit
+  core.info(`${token}`);
   const octokit = github.getOctokit(token)
 
   // extract runId
