@@ -19,5 +19,8 @@ inputs:
     default: "10000"
 
 runs:
-  using: docker
-  image: docker://ghcr.io/ahmadnassri/action-workflow-queue:1.1.5
+  using: 'node20'
+  main: 'src/index.js'
+  post: 'src/index.js'
+  post-if: success()
+
