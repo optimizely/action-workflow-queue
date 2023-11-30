@@ -9827,7 +9827,7 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
     }
 
     // zzz
-    core.info(`waiting for #${delay/1000} minutes before polling the status again`)
+    core.info(`waiting for #${delay/1000} seconds before polling the status again`)
     await sleep(delay)
 
     // get the data again
