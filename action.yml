@@ -18,6 +18,10 @@ inputs:
     description: delay between status checks (in milliseconds)
     default: "3000"
 
+  job-name:
+    description: Specific job name to check concurrency for (optional - defaults to workflow-level concurrency)
+    required: false
+
 runs:
   using: docker
   image: docker://ghcr.io/ahmadnassri/action-workflow-queue:1.2.0
