@@ -10,7 +10,7 @@ import runs from './runs.js'
 // sleep function
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-export default async function ({ token, delay, timeout }) {
+export default async function ({ token, delay, timeout, jobName }) {
   let timer = 0
 
   // init octokit
@@ -28,13 +28,21 @@ export default async function ({ token, delay, timeout }) {
   // date to check against
   const before = new Date(run_started_at)
 
-  core.info(`searching for workflow runs before ${before}`)
+  if (jobName) {
+    core.info(`searching for job "${jobName}" in workflow runs before ${before}`)
+  } else {
+    core.info(`searching for workflow runs before ${before}`)
+  }
 
   // get previous runs
-  let waiting_for = await runs({ octokit, run_id, workflow_id, before })
+  let waiting_for = await runs({ octokit, run_id, workflow_id, before, jobName })
 
   if (waiting_for.length === 0) {
-    core.info('no active run of this workflow found')
+    if (jobName) {
+      core.info(`no active run of job "${jobName}" found`)
+    } else {
+      core.info('no active run of this workflow found')
+    }
     process.exit(0)
   }
 
@@ -44,7 +52,11 @@ export default async function ({ token, delay, timeout }) {
 
 
     for (const run of waiting_for) {
-      core.info(`waiting for run #${run.id}: current status: ${run.status}`)
+      if (jobName) {
+        core.info(`waiting for job "${jobName}" in run #${run.id}: current status: ${run.status}`)
+      } else {
+        core.info(`waiting for run #${run.id}: current status: ${run.status}`)
+      }
     }
 
     // zzz
@@ -52,8 +64,12 @@ export default async function ({ token, delay, timeout }) {
     await sleep(delay)
 
     // get the data again
-    waiting_for = await runs({ octokit, run_id, workflow_id, before })
+    waiting_for = await runs({ octokit, run_id, workflow_id, before, jobName })
   }
 
-  core.info('all runs in the queue completed!')
+  if (jobName) {
+    core.info(`all instances of job "${jobName}" in the queue completed!`)
+  } else {
+    core.info('all runs in the queue completed!')
+  }
 }
