@@ -1,10 +1,10 @@
 # --- base stage --- #
 
-FROM alpine:3.18 AS base
+FROM alpine:3.19 AS base
 
 # hadolint ignore=DL3018
 RUN apk add --no-cache --update \
-  nodejs=18.17.0-r0 \
+  nodejs=18.18.2-r0 \
   git=2.40.1-r0 \
   openssh=9.3_p2-r0 \
   ca-certificates=20230506-r0 \
